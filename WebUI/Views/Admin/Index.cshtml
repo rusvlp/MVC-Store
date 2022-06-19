@@ -1,0 +1,134 @@
+﻿@model  WebUI.Models.PartsAndOrdersModel
+
+@{
+    ViewBag.Title = "Admin Panel";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<h1>Товары в магазине</h1>
+
+<table class="table">
+    <tr>
+        <th>
+            Имя
+        </th>
+        <th>
+            Описание
+        </th>
+        <th>
+            Категория
+        </th>
+        <th>
+            Цена
+        </th>
+        <th>
+            Количество на складе
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Parts)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.Name, "Edit", new { id = item.Id })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+               
+                @using (Html.BeginForm("Delete", "Admin"))
+                {
+                    @Html.Hidden("id", item.Id)
+                    <input type="submit"
+                           class="btn btn-default btn-xs"
+                           value="Удалить" />
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+<h1>Список заказов: </h1>
+
+<table class="table">
+    <tr>
+        <th>
+            Имя заказчика
+        </th>
+        <th>
+            Первый адрес
+        </th>
+        <th>
+            Второй адрес
+        </th>
+        <th>
+            Третий адрес
+        </th>
+        <th>
+            Город
+        </th>
+        <th>
+            Страна
+        </th>
+        <th>
+            Детали заказа
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Orders)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Line1)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Line2)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Line3)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.City)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Country)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.PartAndAmount)
+    </td>
+    <td>
+
+        @using (Html.BeginForm("Delete", "Admin"))
+        {
+            @Html.Hidden("id", item.Id)
+            <input type="submit"
+                   class="btn btn-default btn-xs"
+                   value="Удалить" />
+        }
+    </td>
+</tr>
+    }
+
+</table>
